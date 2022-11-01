@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY go.mod ./
 COPY *.go ./
-COPY static ./static
+COPY vendor ./vendor
 
 RUN go build -o /gotwitterapi
 
