@@ -1,15 +1,14 @@
 FROM golang:1.17-alpine
 
-ENV CGO_ENABLED 0
 RUN mkdir /app
 WORKDIR /app
 
-COPY go.mod go.sum ./
-COPY *.go ./
-COPY vendor ./vendor
+RUN export GO111MODULE=on
+RUN go get github.com/ridhosatriawan/gotwitterapi
+RUN cd /app && git clone https://github.com/ridhosatriawan/gotwitterapi.git
 
-RUN go build -o /gotwitterapi
+RUN cd /app/gotwitterapi && go build
 
 EXPOSE 8090
 
-CMD ["/gotwitterapi"]
+CMD ["/app/gotwitterapi"]
