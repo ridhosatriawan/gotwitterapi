@@ -1,13 +1,16 @@
 FROM golang:1.17-alpine
 
-RUN mkdir /app
+RUN apk update && apk --no-cache git
+
 WORKDIR /app
 
-RUN export GO111MODULE=on
-RUN cd /app && git clone https://github.com/ridhosatriawan/gotwitterapi.git
+COPY go.mod go.sum ./
+COPY *.go ./
+COPY vendor ./vendor
 
-RUN cd /app/gotwitterapi && go build
+RUN go mod tidy
+RUN go build -o /gotwitterapi
 
 EXPOSE 8090
 
-CMD ["/app/gotwitterapi"]
+CMD ["/gotwitterapi"]
