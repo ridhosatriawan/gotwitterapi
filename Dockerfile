@@ -1,7 +1,7 @@
 FROM golang:1.17-alpine
 
 ENV CGO_ENABLED 0
-RUN mksdir /app
+RUN mkdir /app
 WORKDIR /app
 
 COPY go.mod go.sum ./
