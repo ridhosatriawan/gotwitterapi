@@ -1,8 +1,10 @@
 FROM golang:1.17-alpine
 
+ENV CGO_ENABLED 0
+RUN mksdir /app
 WORKDIR /app
 
-COPY go.mod ./
+COPY go.mod go.sum ./
 COPY *.go ./
 COPY vendor ./vendor
 
