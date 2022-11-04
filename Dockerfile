@@ -1,16 +1,12 @@
 FROM golang:1.17-alpine
 
-RUN apk update && apk --no-cache git
-
+RUN mkdir /app
+ADD . /app
 WORKDIR /app
 
-COPY go.mod go.sum ./
-COPY *.go ./
-COPY vendor ./vendor
+RUN go mod download
 
 RUN go mod tidy
-RUN go build -o /gotwitterapi
+RUN go build -o main
 
-EXPOSE 8090
-
-CMD ["/gotwitterapi"]
+CMD ["/app/main"]
